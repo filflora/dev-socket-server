@@ -11,6 +11,10 @@
     },
     "keywords": [],
     "author": "",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/filflora/dev-socket-server"
+    },
     "license": "ISC",
     "dependencies": {
         "body-parser": "^1.19.0",
