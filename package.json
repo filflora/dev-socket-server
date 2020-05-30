@@ -1,0 +1,25 @@
+{
+    "name": "dev-socket-server",
+    "version": "1.0.0",
+    "description": "This is a WebSocket server that can be used for development with the help of the DevSocket DevTools Extension",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "bin": {
+        "dev-socket": "./index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "chalk": "^4.0.0",
+        "cli-table": "^0.3.1",
+        "cors": "^2.8.5",
+        "express": "<3",
+        "figlet": "^1.4.0",
+        "sockjs": "^0.3.20",
+        "yargs": "^15.3.1"
+    }
+}
