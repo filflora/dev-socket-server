@@ -1,6 +1,6 @@
 {
     "name": "dev-socket-server",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "This is a WebSocket server that can be used for development with the help of the DevSocket DevTools Extension",
     "main": "index.js",
     "scripts": {
