@@ -10,14 +10,13 @@ const options = yargs
     .argv;
 
 const express = require('express');
-const path = require('path');
 const sockjs = require('sockjs');
 const cors = require('cors');
 const chalk = require('chalk');
 const figlet = require('figlet');
 const bodyParser = require('body-parser');
 var Table = require('cli-table');
- 
+
 const PORT = options.port || DEFAULTS.PORT;
 
 
@@ -32,10 +31,11 @@ sockjsEndpoint.on('connection', (conn) => {
 
 
 const app = express.createServer();
-app.use(express.static('public'));
-app.use(bodyParser.json());
 
-app.use(cors({ origin: true, credentials: true }));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
 
 sockjsEndpoint.installHandlers(app, { prefix: '/websocketendpoint' });
 
@@ -43,12 +43,17 @@ app.get('/health', (req, res) => res.json({
     status: 'up'
 }));
 
-app.post('/send-message', (req, res, next) => {
+app.post('/send-message', (req, res) => {
 
+    console.log('Try to send message: ', req.body);
     if (!connection) {
         const message = 'Could not send message because there is no active connection.';
         console.log(message);
-        next(new Error(message));
+
+        return res
+            .status(500)
+            .json({ error: { message } });
+
     }
 
     try {
@@ -58,16 +63,18 @@ app.post('/send-message', (req, res, next) => {
     } catch (e) {
         const message = 'Could not send message through WebSocket.'
         console.error(message, e);
-        next(new Error(message));
+        return res
+            .status(500)
+            .json({ error: { message } });
     }
 
     return res.json({
-        statusCode: 200
+        status: 200
     });
 
 });
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/index.html')));
+app.get('/', (req, res) => res.send('Hello dev-socket server!'));
 
 
 
